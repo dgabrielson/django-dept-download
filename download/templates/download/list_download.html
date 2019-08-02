@@ -1,0 +1,57 @@
+{% extends 'download/list_platform.html' %}
+{% load humanize %}
+
+{# ########################################### #}
+
+{% block page_title %}Select Download{% endblock %}
+{% block title %}Select Download{% endblock %}
+
+{# ########################################### #}
+
+{{% block page_breadcrumbs %}
+    {{ block.super }}
+{% endblock %}
+
+{# ########################################### #}
+
+{% block content %}
+
+{% if download_list %}
+
+    {% if remaining_downloads != 0 %}
+        <ul>
+        {% for item in download_list %}
+            <li> <a href="{% url 'download-download-file' software=selected_software.slug platform=selected_platform.slug fileslug=item.slug %}">{{ item.Name|safe }}</a>
+        {% endfor %}
+        </ul>
+
+        {% ifnotequal remaining_downloads -1 %}
+            <p class="alert">You have {{ remaining_downloads|apnumber }} downloads remaining for {{ selected_software.Name|safe }}.</p>
+        {% endifnotequal %}
+    {% else %}
+        <p>You have <strong>no downloads remaining</strong>.
+    {% endif %}
+
+{% else %}
+
+    <p class="alert">There are no downloads available.</p>
+
+{% endif %}
+
+
+{% endblock %}
+
+
+{% block page_left_sidebar %}
+{{ block.super }}
+
+
+    <p class="sidebar_link">
+        <a href="../">Download: {{ selected_software.Name|safe }}</a>
+    </p>
+
+
+{% endblock %}
+
+
+{# ########################################### #}

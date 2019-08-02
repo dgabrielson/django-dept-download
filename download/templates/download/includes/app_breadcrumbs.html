@@ -1,0 +1,9 @@
+
+{% url 'download-main' as top_url %}
+{% if top_url %}
+    {% if top_url != request.path %}
+        <a href="{{ top_url }}">Downloads</a>
+    {% else %}
+        Downloads
+    {% endif %}
+{% endif %}

@@ -1,0 +1,59 @@
+{% extends 'download/list_software.html' %}
+{% load humanize %}
+
+{# ########################################### #}
+
+{% block page_title %}{{ selected_software.Name|safe }} Download - Select your Operating System{% endblock %}
+{% block title %}{{ selected_software.Name|safe }} Download{% endblock %}
+
+{# ########################################### #}
+
+{% block page_breadcrumbs %}
+    {{ block.super }}
+    {% if selected_platform %}
+        <span class="divider">&gt;</span>
+        {% url 'download-list-download' software=selected_software.slug platform=selected_platform as url %}
+        {% if url != request.path %}
+            <a href="{{ url }}">{{ selected_platform.Name }}</a>
+        {% else %}
+            {{ selected_platform.Name }}
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{# ########################################### #}
+
+{% block content %}
+
+{% if platform_list %}
+
+
+    {% if remaining_downloads != 0 %}
+        <h2>Select your Operating System:</h2>
+        <ul>
+        {% for item in platform_list %}
+            <li> <a href="{% url 'download-list-download' software=selected_software.slug platform=item.slug %}">{{ item.Name|safe }}</a>
+        {% endfor %}
+        </ul>
+
+        {% ifnotequal remaining_downloads -1 %}
+            <p class="alert">You have {{ remaining_downloads|apnumber }} downloads remaining for {{ selected_software.Name|safe }}.</p>
+        {% endifnotequal %}
+
+    {% else %}
+        <p>You have <strong>no downloads remaining</strong>.
+    {% endif %}
+
+{% else %}
+
+    <p class="alert">There are no platforms available.</p>
+
+{% endif %}
+
+
+{% endblock %}
+
+
+
+
+{# ########################################### #}

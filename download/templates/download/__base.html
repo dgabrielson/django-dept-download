@@ -1,0 +1,48 @@
+{% extends 'site_base.html' %}
+{% load markup %}
+
+{# ########################################### #}
+
+{% block page_title %}{% endblock %}
+
+{# ########################################### #}
+
+{% block page_content_header %}{% block title %}{% endblock %}{% endblock %}
+{% block page_content_body %}
+
+{% block download_item_notes %}
+
+{% if selected_software.note %}
+    {{ selected_software.note|restructuredtext }}
+{% endif %}
+
+{% if selected_platform.note %}
+    {{ selected_platform.note|restructuredtext }}
+{% endif %}
+
+{% if selected_download.note %}
+    {{ selected_download.note|restructuredtext }}
+{% endif %}
+
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+
+{% endblock %}
+
+
+{# ########################################### #}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% block app_breadcrumbs %}
+        <span class="divider">&gt;</span>
+        {% include './includes/app_breadcrumbs.html' %}
+        {% block page_breadcrumbs %}
+        {% endblock %}
+    {% endblock app_breadcrumbs %}
+{% endblock %}
+
+{# ########################################### #}

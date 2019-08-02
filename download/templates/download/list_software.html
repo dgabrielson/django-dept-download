@@ -1,0 +1,44 @@
+{% extends 'download/__base.html' %}
+
+{# ########################################### #}
+
+{% block page_title %}Select Download{% endblock %}
+{% block title %}Select Download{% endblock %}
+
+{# ########################################### #}
+
+{% block page_breadcrumbs %}
+    {{ block.super }}
+    {% if selected_software %}
+        <span class="divider">&gt;</span>
+        {% url 'download-list-platform' software=selected_software.slug as url %}
+        {% if url != request.path %}
+            <a href="{{ url }}">{{ selected_software.Name }}</a>
+        {% else %}
+            {{ selected_software.Name }}
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{# ########################################### #}
+
+{% block content %}
+
+{% if software_list %}
+
+    <ul>
+    {% for item in software_list %}
+        <li> <a href="{% url 'download-list-platform' software=item.slug %}">{{ item.Name|safe }}</a>
+    {% endfor %}
+    </ul>
+
+{% else %}
+
+    <p class="alert">There is no software available.</p>
+
+{% endif %}
+
+{% endblock %}
+
+
+{# ########################################### #}
